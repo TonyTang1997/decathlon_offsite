@@ -29,7 +29,7 @@ DATE_PART('day', age(MIN(T_RETURN.transaction_date), T_SALE.transaction_date)) A
 FROM T_SALE LEFT JOIN T_RETURN ON T_SALE.rfid = T_RETURN.rfid AND T_RETURN.transaction_date > T_SALE.transaction_date GROUP BY T_SALE.rfid, T_SALE.transaction_date)
 SELECT rfid, SUM(days_diff) AS days_diff_sum FROM TMP_RESULTS GROUP BY rfid HAVING SUM(days_diff) IS NOT NULL ORDER BY SUM(days_diff) DESC;
 ```
-
+output of the above query : './q1_outputs/q1_output1.csv'
 
 ### Average days difference between ‘sale’ and ‘return’ for each item in October 2019
 
@@ -45,6 +45,7 @@ FROM T_SALE LEFT JOIN T_RETURN ON T_SALE.rfid = T_RETURN.rfid AND T_RETURN.trans
 SELECT rfid, AVG(days_diff) AS days_diff_avg FROM TMP_RESULTS GROUP BY rfid HAVING AVG(days_diff) IS NOT NULL ORDER BY AVG(days_diff) DESC;
 ```
 
+output of the above query : './q1_outputs/q1_output2.csv'
 
 ### Items with only‘sale’record
 
@@ -60,6 +61,7 @@ FROM T_SALE LEFT JOIN T_RETURN ON T_SALE.rfid = T_RETURN.rfid AND T_RETURN.trans
 SELECT rfid, SUM(days_diff) AS total_days_diff FROM TMP_RESULTS GROUP BY rfid HAVING SUM(days_diff) IS NULL;
 ```
 
+output of the above query : './q1_outputs/q1_output3.csv'
 
 ### Items with only‘return’record
 
@@ -74,3 +76,5 @@ SALE_EXIST AS
 (SELECT rfid, SUM(days_diff) AS days_diff_sum FROM TMP_RESULTS GROUP BY rfid)
 SELECT T.* FROM transaction_detail AS T LEFT JOIN SALE_EXIST AS S ON T.rfid = S.rfid WHERE S.rfid IS NULL;
 ```
+
+output of the above query : './q1_outputs/q1_output4.csv'
